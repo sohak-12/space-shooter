@@ -5,16 +5,41 @@ namespace SpaceShooter
     class Bullet : GameObject
     {
         float speed;
-        Color color;
+        Color clr;
+        bool fromPlayer;
 
-        public Bullet(float x, float y, float spd, Color col)
+        static Image img;
+
+        static Bullet()
+        {
+            try
+            {
+                img = Image.FromFile("Assets\\Bullets.jpeg");
+            }
+            catch
+            {
+                img = null;
+            }
+        }
+
+        public Bullet(float x, float y, float spd, Color c, bool playerShot = false)
         {
             X = x;
             Y = y;
-            Width = 4;
-            Height = 12;
             speed = spd;
-            color = col;
+            clr = c;
+            fromPlayer = playerShot;
+
+            if (fromPlayer)
+            {
+                Width = 40;
+                Height = 40;
+            }
+            else
+            {
+                Width = 4;
+                Height = 12;
+            }
         }
 
         public override void Update()
@@ -27,7 +52,13 @@ namespace SpaceShooter
 
         public override void Draw(Graphics g)
         {
-            using (var b = new SolidBrush(color))
+            if (fromPlayer && img != null)
+            {
+                g.DrawImage(img, X, Y, Width, Height);
+                return;
+            }
+
+            using (var b = new SolidBrush(clr))
                 g.FillRectangle(b, X, Y, Width, Height);
         }
     }

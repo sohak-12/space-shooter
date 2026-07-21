@@ -14,7 +14,7 @@ namespace SpaceShooter
         Player player;
         List<Enemy> enemies = new List<Enemy>();
         List<float[]> stars = new List<float[]>();
-        Random rand = new Random();
+        Random rng = new Random();
         Bitmap buffer;
         Graphics canvas;
 
@@ -38,7 +38,7 @@ namespace SpaceShooter
             player = new Player(W);
 
             for (int i = 0; i < 80; i++)
-                stars.Add(new float[] { rand.Next(W), rand.Next(H) });
+                stars.Add(new float[] { rng.Next(W), rng.Next(H) });
 
             SpawnWave();
 
@@ -49,7 +49,7 @@ namespace SpaceShooter
 
         void OnTick(object sender, EventArgs e)
         {
-            Update();
+            GameUpdate();
             Invalidate();
         }
 
@@ -57,10 +57,10 @@ namespace SpaceShooter
         {
             int count = 5 + wave * 2;
             for (int i = 0; i < count; i++)
-                enemies.Add(new Enemy(rand.Next(50, W - 86), rand.Next(-200, -30), rand));
+                enemies.Add(new Enemy(rng.Next(50, W - 86), rng.Next(-200, -30), rng));
         }
 
-        new void Update()
+        void GameUpdate()
         {
             if (gameOver) return;
 
@@ -70,7 +70,7 @@ namespace SpaceShooter
             spawnTick++;
             if (spawnTick > 300)
             {
-                enemies.Add(new Enemy(rand.Next(50, W - 86), -40, rand));
+                enemies.Add(new Enemy(rng.Next(50, W - 86), -40, rng));
                 spawnTick = 0;
             }
 

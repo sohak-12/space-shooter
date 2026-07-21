@@ -15,11 +15,13 @@ namespace SpaceShooter
 
         public bool CollidesWith(GameObject other)
         {
-            if (!Active || !other.Active) return false;
+            if (!Active || !other.Active)
+                return false;
+
             return Bounds.IntersectsWith(other.Bounds);
         }
 
         public abstract void Update();
-        public abstract void Draw(Graphics g);
+        public abstract void Draw(System.Drawing.Graphics g);
     }
 }

@@ -6,10 +6,10 @@ namespace SpaceShooter
 {
     class Enemy : GameObject
     {
-        float speedX = 2;
-        float speedY;
-        float shootTimer;
-        Random rand;
+        float dx = 2;
+        float dy;
+        float fireTimer;
+        Random rng;
 
         public List<Bullet> Bullets = new List<Bullet>();
 
@@ -19,24 +19,24 @@ namespace SpaceShooter
             Y = y;
             Width = 36;
             Height = 30;
-            rand = r;
-            speedY = 0.5f + (float)r.NextDouble();
-            shootTimer = r.Next(60, 180);
+            rng = r;
+            dy = 0.5f + (float)r.NextDouble();
+            fireTimer = r.Next(60, 180);
         }
 
         public override void Update()
         {
-            X += speedX;
-            Y += speedY;
+            X += dx;
+            Y += dy;
 
             if (X <= 0 || X >= 800 - Width)
-                speedX *= -1;
+                dx *= -1;
 
-            shootTimer--;
-            if (shootTimer <= 0)
+            fireTimer--;
+            if (fireTimer <= 0)
             {
                 Bullets.Add(new Bullet(X + Width / 2 - 2, Y + Height, 5, Color.OrangeRed));
-                shootTimer = rand.Next(60, 180);
+                fireTimer = rng.Next(60, 180);
             }
 
             foreach (var b in Bullets)
@@ -47,7 +47,7 @@ namespace SpaceShooter
 
         public override void Draw(Graphics g)
         {
-            PointF[] shape = new PointF[]
+            PointF[] pts = new PointF[]
             {
                 new PointF(X + Width / 2, Y + Height),
                 new PointF(X + Width, Y),
@@ -55,13 +55,13 @@ namespace SpaceShooter
                 new PointF(X, Y)
             };
 
-            using (var brush = new SolidBrush(Color.LimeGreen))
-                g.FillPolygon(brush, shape);
+            using (var br = new SolidBrush(Color.LimeGreen))
+                g.FillPolygon(br, pts);
 
-            using (var red = new SolidBrush(Color.Red))
+            using (var r = new SolidBrush(Color.Red))
             {
-                g.FillEllipse(red, X + 8, Y + 6, 6, 6);
-                g.FillEllipse(red, X + Width - 14, Y + 6, 6, 6);
+                g.FillEllipse(r, X + 8, Y + 6, 6, 6);
+                g.FillEllipse(r, X + Width - 14, Y + 6, 6, 6);
             }
 
             foreach (var b in Bullets)
