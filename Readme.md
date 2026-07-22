@@ -94,8 +94,11 @@ bin\Release\SpaceShooter.exe
 ---
 
 ## Screenshots
-<img width="992" height="851" alt="image" src="https://github.com/user-attachments/assets/f8d9e6f0-0d95-4331-be6c-2fb852681920" />
-<img width="992" height="852" alt="image" src="https://github.com/user-attachments/assets/95d16138-5e7f-4be8-bbe8-aca792b4193f" />
+<img width="990" height="840" alt="image" src="https://github.com/user-attachments/assets/bc716ad2-43b2-450b-a52e-b4713a6bbd54" />
+
+
+<img width="982" height="842" alt="image" src="https://github.com/user-attachments/assets/3d815357-8759-4100-9672-a4ecf9716478" />
+
 
 
 
