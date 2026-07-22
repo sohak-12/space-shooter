@@ -14,7 +14,7 @@ namespace SpaceShooter
         {
             try
             {
-                img = Image.FromFile("Assets\\Bullets.jpeg");
+                img = Image.FromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Assets", "Bullets.png"));
             }
             catch
             {

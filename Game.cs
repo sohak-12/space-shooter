@@ -17,6 +17,7 @@ namespace SpaceShooter
         Random rng = new Random();
         Bitmap buffer;
         Graphics canvas;
+        Image bgImg;
 
         int wave = 1;
         int spawnTick = 0;
@@ -35,10 +36,12 @@ namespace SpaceShooter
 
             buffer = new Bitmap(W, H);
             canvas = Graphics.FromImage(buffer);
+
+            string assetsPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Assets");
+            try { bgImg = Image.FromFile(System.IO.Path.Combine(assetsPath, "Background.jpg")); } catch { bgImg = null; }
             player = new Player(W);
 
-            for (int i = 0; i < 80; i++)
-                stars.Add(new float[] { rng.Next(W), rng.Next(H) });
+
 
             SpawnWave();
 
@@ -125,10 +128,10 @@ namespace SpaceShooter
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            canvas.Clear(Color.Black);
-
-            foreach (var s in stars)
-                canvas.FillRectangle(Brushes.White, s[0], s[1], 2, 2);
+            if (bgImg != null)
+                canvas.DrawImage(bgImg, 0, 0, W, H);
+            else
+                canvas.Clear(Color.Black);
 
             if (!gameOver)
             {

@@ -23,7 +23,8 @@ namespace SpaceShooter
             X = sw / 2 - Width / 2;
             Y = 560;
 
-            try { shipImg = Image.FromFile("Assets\\Rocket.jpeg"); }
+            string assetsDir = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Assets");
+            try { shipImg = Image.FromFile(System.IO.Path.Combine(assetsDir, "Rocket.png")); }
             catch { shipImg = null; }
         }
 

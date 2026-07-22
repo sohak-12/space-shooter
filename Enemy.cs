@@ -10,6 +10,13 @@ namespace SpaceShooter
         float dy;
         float fireTimer;
         Random rng;
+        static Image enemyImg;
+
+        static Enemy()
+        {
+            try { enemyImg = Image.FromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Assets", "Enemies.png")); }
+            catch { enemyImg = null; }
+        }
 
         public List<Bullet> Bullets = new List<Bullet>();
 
@@ -17,8 +24,8 @@ namespace SpaceShooter
         {
             X = x;
             Y = y;
-            Width = 36;
-            Height = 30;
+            Width = 50;
+            Height = 50;
             rng = r;
             dy = 0.5f + (float)r.NextDouble();
             fireTimer = r.Next(60, 180);
@@ -35,7 +42,7 @@ namespace SpaceShooter
             fireTimer--;
             if (fireTimer <= 0)
             {
-                Bullets.Add(new Bullet(X + Width / 2 - 2, Y + Height, 5, Color.OrangeRed));
+                Bullets.Add(new Bullet(X + Width / 2 - 2, Y + Height, 5, Color.Yellow));
                 fireTimer = rng.Next(60, 180);
             }
 
@@ -47,21 +54,22 @@ namespace SpaceShooter
 
         public override void Draw(Graphics g)
         {
-            PointF[] pts = new PointF[]
+            if (enemyImg != null)
             {
-                new PointF(X + Width / 2, Y + Height),
-                new PointF(X + Width, Y),
-                new PointF(X + Width / 2, Y + 8),
-                new PointF(X, Y)
-            };
-
-            using (var br = new SolidBrush(Color.LimeGreen))
-                g.FillPolygon(br, pts);
-
-            using (var r = new SolidBrush(Color.Red))
+                g.DrawImage(enemyImg, X, Y, Width, Height);
+            }
+            else
             {
-                g.FillEllipse(r, X + 8, Y + 6, 6, 6);
-                g.FillEllipse(r, X + Width - 14, Y + 6, 6, 6);
+                PointF[] pts = new PointF[]
+                {
+                    new PointF(X + Width / 2, Y + Height),
+                    new PointF(X + Width, Y),
+                    new PointF(X + Width / 2, Y + 8),
+                    new PointF(X, Y)
+                };
+
+                using (var br = new SolidBrush(Color.LimeGreen))
+                    g.FillPolygon(br, pts);
             }
 
             foreach (var b in Bullets)
